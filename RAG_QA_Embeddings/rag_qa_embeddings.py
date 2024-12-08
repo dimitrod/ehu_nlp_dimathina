@@ -8,7 +8,7 @@ import os
 
 
 class rag_qa_embeddings:
-    def __init__(self):
+    def __init__(self, params):
         env = os.environ.copy()
         env["PYTHONPATH"] = "rag_qa_database"
         self.database_path = os.path.join(os.getcwd(), "RAG_QA_Embeddings/rag_qa_database")
