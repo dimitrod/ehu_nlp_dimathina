@@ -14,6 +14,7 @@ class rag_qa_embeddings:
         self.database_path = os.path.join(os.getcwd(), "RAG_QA_Embeddings/rag_qa_database")
         self.database = self.load_database()
         self.model = self.load_model()
+        self.k = params[0]
 
     def load_database(self):
         embedding_model = self.load_embedding_model()
@@ -27,7 +28,7 @@ class rag_qa_embeddings:
         return HuggingFaceEmbeddings(model_name="BAAI/bge-base-en-v1.5")
 
     def get_contexts(self, question):
-        return self.database.similarity_search(question)
+        return self.database.similarity_search(question, self.k)
 
     def get_answer(self, question, contexts):
         context = ""
