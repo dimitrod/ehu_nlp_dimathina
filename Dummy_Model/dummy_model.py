@@ -1,7 +1,8 @@
 import json
 
 class dummy_model:
-    def __init__(self):
+    def __init__(self, params):
+        print(params[0])
         with open("Dummy_Model/dummy_data.json", "r", encoding="utf-8") as f:
             self.data = json.loads(f.read())
 
