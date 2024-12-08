@@ -7,8 +7,8 @@ class mistral_instruct:
     quantization_config = BitsAndBytesConfig(load_in_4bit=True)
     model_id = "mistralai/Mistral-7B-Instruct-v0.3"
 
-    model = AutoModelForCausalLM.from_pretrained(model_id, quantization_config=quantization_config, device_map="auto")
-    tokenizer = AutoTokenizer.from_pretrained(model_id)
+    self.model = AutoModelForCausalLM.from_pretrained(model_id, quantization_config=quantization_config, device_map="auto")
+    self.tokenizer = AutoTokenizer.from_pretrained(model_id)
 
   def invoke(self, question):
     device = "cuda:0"
