@@ -1,0 +1,1 @@
+{'exact_match': 100.0, 'f1': 100.0, 'common': 7900, 'denominator': 7900, 'pred_len': 7900, 'gold_len': 7900}
