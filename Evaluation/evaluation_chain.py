@@ -70,7 +70,7 @@ def get_args():
     parser.add_argument('--model_module', help='Module of the model')
     parser.add_argument('--model_class', help='Class of the model')
     parser.add_argument('--split_size', help='Size of the split')
-    parser.add_argument('--model_params', help='Parameters of the model')
+    parser.add_argument('--model_params', nargs='+', help='Parameters of the model')
     args = parser.parse_args()
     return args
 
