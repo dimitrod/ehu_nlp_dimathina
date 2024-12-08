@@ -53,7 +53,7 @@ def create_split(path, split):
 
   write_data(f"{path}/evaluation_dataset.json", data)
 
-def load_model(path, model_name):
+def load_model(path, model_name, model_params):
   print("Loading model...")
   module = importlib.import_module(path)
   model = getattr(module, model_name)
@@ -70,6 +70,7 @@ def get_args():
     parser.add_argument('--model_module', help='Module of the model')
     parser.add_argument('--model_class', help='Class of the model')
     parser.add_argument('--split_size', help='Size of the split')
+    parser.add_argument('--model_params', nargs='+', help='Parameters of the model')
     args = parser.parse_args()
     return args
 
@@ -82,12 +83,13 @@ if __name__ == "__main__":
     model_directory = args.model_directory
     model_module = args.model_module
     model_class = args.model_class
+    model_params = args.model_params
 
     model_path = f"{model_directory}.{model_module}"
     model_name = f"{model_class}"
 
     questions = load_questions(directory, split_size)
-    model = load_model(model_path, model_name)
+    model = load_model(model_path, model_name, model_params)
     print("Model initiated")
     print("Starting QA...")
     answers = get_answers(directory, questions, model)
