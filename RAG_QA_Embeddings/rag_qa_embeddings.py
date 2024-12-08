@@ -14,7 +14,7 @@ class rag_qa_embeddings:
         self.database_path = os.path.join(os.getcwd(), "RAG_QA_Embeddings/rag_qa_database")
         self.database = self.load_database()
         self.model = self.load_model()
-        self.k = params[0]
+        self.k = int(params[0])
 
     def load_database(self):
         embedding_model = self.load_embedding_model()
