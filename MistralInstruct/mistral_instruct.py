@@ -1,6 +1,6 @@
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 
-class tinyllama:
+class mistral_instruct:
   def __init__(self):
     quantization_config = BitsAndBytesConfig(load_in_4bit=True)
     model_id = "mistralai/Mistral-7B-Instruct-v0.3"
