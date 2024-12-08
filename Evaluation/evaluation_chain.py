@@ -22,7 +22,6 @@ def evaluate_triviaqa(dataset_file, prediction_file):
     capture_output=True,
     text=True,
   )
-  print(result.stderr)
   return result.stdout
 
 def get_answers(directory, questions, model):
