@@ -35,7 +35,7 @@ def get_answers(directory, questions, model):
 def load_questions(path, split):
     create_split(path, split)
 
-    with open(f"{path}/evaluation_dataset.json", "r", encoding="utf-8") as f:
+    with open(f"{path}/validation_dataset.json", "r", encoding="utf-8") as f:
         data = json.loads(f.read())
 
     questions = []
@@ -51,7 +51,7 @@ def create_split(path, split):
 
   data["Data"] = data["Data"][:split]
 
-  write_data(f"{path}/evaluation_dataset.json", data)
+  write_data(f"{path}/validation_dataset.json", data)
 
 def load_model(path, model_name, model_params):
   print("Loading model...")
@@ -79,7 +79,10 @@ if __name__ == "__main__":
 
     directory = "Evaluation/datasets"
 
-    split_size = int(args.split_size)
+    if args.split_size is not None:
+        split_size = int(args.split_size)
+    else:
+        split_size = 7993
     model_directory = args.model_directory
     model_module = args.model_module
     model_class = args.model_class
