@@ -1,0 +1,10 @@
+em=0: 
+
+England ['sayre language academy', 'chicago transportation committee', 'chicago illinois u s', 'sister cities of chicago', 'sister cities chicago', 'transport in chicago', 'chicago illinois', 'chicago illinois usa', 'chi town', 'hog butcher for world', 'religion in chicago', 'chicago', 'chicago wi', 'near north montessori', 'un locode uschi', 'city of broad shoulders', 'chicago theatre', 'chicago usa', 'uschi', 'chicago il', 'city of chicago', 'chicago finance committee', 'list of sister cities of chicago', 'chi beria', 'weather in chicago', 'chicago wisconsin', 'land of smelly onions', 'ariel community academy', 'chicago theater scene', 'chicago united states', 'paris of america', 'chicago illionis', 'chicago illinois united states', 'chcago', 'chi city', 'chicago illinois us', 'performing arts in chicago', 'chicago theatre scene', 'chichago', 'chicago ill', 'city of chicago illinois']
+em=0: 
+
+Pittsburgh Steelers ['chicago bears', 'chicago staleys', 'chicago gators', 'decatur staleys', 'save da planet', 'chicago bears football']
+em=0: 
+
+First European country to abolish capital punishment: Sweden (1864) ['norwegen', 'kongeriket norge', 'norway', 'republic of norway', 'noorwegen', 'norvege', 'mainland norway', 'kingdom of norway', 'sport in norway', 'noreg', 'noruega', 'norwegia', 'noregur', 'royal kingdom of norway', 'name of norway', 'kongeriket noreg', 'norwegian kingdom', 'etymology of norway', 'norvège', 'iso 3166 1 no', 'norwegian state']
+{'exact_match': 40.0, 'f1': 40.0, 'common': 5, 'denominator': 5, 'pred_len': 5, 'gold_len': 5}
