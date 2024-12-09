@@ -35,7 +35,7 @@ def get_answers(directory, questions, model):
 def load_questions(path, split):
     create_split(path, split)
 
-    with open(f"{path}/validation_dataset.json", "r", encoding="utf-8") as f:
+    with open(f"{path}/evaluation_dataset.json", "r", encoding="utf-8") as f:
         data = json.loads(f.read())
 
     questions = []
@@ -46,12 +46,12 @@ def load_questions(path, split):
     return questions
 
 def create_split(path, split):
-  with open(f"{path}/original_dataset.json", "r", encoding="utf-8") as f:
+  with open(f"{path}/validation_dataset.json", "r", encoding="utf-8") as f:
     data = json.loads(f.read())
 
   data["Data"] = data["Data"][:split]
 
-  write_data(f"{path}/validation_dataset.json", data)
+  write_data(f"{path}/evaluation_dataset.json", data)
 
 def load_model(path, model_name, model_params):
   print("Loading model...")
@@ -98,7 +98,7 @@ if __name__ == "__main__":
     answers = get_answers(directory, questions, model)
     print("QA complete")
     print("Starting evaluation...")
-    results = evaluate_triviaqa(directory + "/validation_dataset.json", directory + "/predictions.json")
+    results = evaluate_triviaqa(directory + "/evaluation_dataset.json", directory + "/predictions.json")
     print("Evaluation complete")
     print("Saving results...")
     with open(f"Evaluation/results/{model_name}_split_size={split_size}_results.txt", "w", encoding="utf-8") as f:
