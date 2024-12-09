@@ -25,14 +25,15 @@ class mistral_instruct:
     question = "When was Baron Andrew Lloyd Webber born?"
     question_add = " Answer as shortly as possible, no additional information, no punctiation. Use the following text to find the answer:"
     instruction = "You are a chatbot who always responds as shortly as possible."
+    question_context = ""
 
-
-    index = pc.Index('wiki-index')
+    index = self.pc.Index('wiki-index')
     query = "When was Baron Andrew Lloyd Webber born?"
-    query_encoded = model.encode([query]).tolist()
-    question_context = index.query(vector=query_encoded, top_k=2, include_metadata=True)
+    query_encoded = self.retriever.encode([query]).tolist()
+    query_return = index.query(vector=query_encoded, top_k=2, include_metadata=True)
+    for x in query_return['matches']:
+      question_context = question_context + str(x['metadata']['bytes'])
 
-    
     messages = [
         {
             "role": "system",
