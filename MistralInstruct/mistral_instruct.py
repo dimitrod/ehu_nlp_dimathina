@@ -2,15 +2,11 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 from huggingface_hub import login
 from sentence_transformers import SentenceTransformer
 from pinecone import Pinecone, ServerlessSpec
-from google.colab import userdata
-
-
 
 class mistral_instruct:
   def __init__(self, params):
-    API_KEY = userdata.get('PINECONE_TOKEN')
-    HF_TOKEN = userdata.get('HF_TOKEN')
-    login(token=HF_TOKEN)
+    API_KEY = input('Enter Pinecone.io token: ')
+    login()
 
     quantization_config = BitsAndBytesConfig(load_in_4bit=True)
     model_id = "mistralai/Mistral-7B-Instruct-v0.3"
@@ -22,13 +18,12 @@ class mistral_instruct:
 
   def invoke(self, question):
     device = "cuda:0"
-    question = "When was Baron Andrew Lloyd Webber born?"
-    question_add = " Answer as shortly as possible, no additional information, no punctiation. Use the following text to find the answer:"
+    question_add = " Answer in one or two words, no additional information, no punctiation. Use the following text to find the answer:"
     instruction = "You are a chatbot who always responds as shortly as possible."
     question_context = ""
 
     index = self.pc.Index('wiki-index')
-    query = "When was Baron Andrew Lloyd Webber born?"
+    query = question
     query_encoded = self.retriever.encode([query]).tolist()
     query_return = index.query(vector=query_encoded, top_k=2, include_metadata=True)
     for x in query_return['matches']:
