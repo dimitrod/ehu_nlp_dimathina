@@ -95,7 +95,7 @@ if __name__ == "__main__":
     answers = get_answers(directory, questions, model)
     print("QA complete")
     print("Starting evaluation...")
-    results = evaluate_triviaqa(directory + "/evaluation_dataset.json", directory + "/predictions.json")
+    results = evaluate_triviaqa(directory + "/validation_dataset.json", directory + "/predictions.json")
     print("Evaluation complete")
     print("Saving results...")
     with open(f"Evaluation/results/{model_name}_split_size={split_size}_results.txt", "w", encoding="utf-8") as f:
