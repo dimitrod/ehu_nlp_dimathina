@@ -1,10 +1,16 @@
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 from huggingface_hub import login
+import torch
 
 class mistral_instruct:
   def __init__(self, params):
     login()
-    quantization_config = BitsAndBytesConfig(load_in_4bit=True)
+    quantization_config = BitsAndBytesConfig(
+      load_in_4bit=True,
+      bnb_4bit_use_double_quant=True,
+      bnb_4bit_quant_type="nf4",
+      bnb_4bit_compute_dtype=torch.bfloat16
+    )
     model_id = "mistralai/Mistral-7B-Instruct-v0.3"
 
     self.model = AutoModelForCausalLM.from_pretrained(model_id, quantization_config=quantization_config, device_map="auto")
