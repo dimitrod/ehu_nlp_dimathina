@@ -5,7 +5,7 @@ import json
 import argparse
 
 def download_dataset(split_size):
-    evaluation_data = load_dataset('trivia_qa', name='rc.wikipedia.nocontext', split=f"train[:{split_size}]")
+    evaluation_data = load_dataset('trivia_qa', name='rc.wikipedia.nocontext', split="validation")
     return evaluation_data
 
 def format_to_json(data):
