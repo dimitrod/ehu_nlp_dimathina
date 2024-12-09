@@ -2,6 +2,7 @@ from datasets import load_dataset
 from tqdm import tqdm
 import datasets
 import json
+import argparse
 
 def download_dataset(split, split_size):
     evaluation_data = load_dataset('trivia_qa', name='rc.wikipedia.nocontext', split=f"split[:{split_size}]")
