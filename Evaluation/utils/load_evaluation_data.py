@@ -5,7 +5,7 @@ import json
 import argparse
 
 def download_dataset(split_size):
-    evaluation_data = load_dataset('trivia_qa', name='rc.wikipedia', split=f"train[:{split_size}]")
+    evaluation_data = load_dataset('trivia_qa', name='rc.wikipedia.nocontext', split=f"train[:{split_size}]")
     return evaluation_data
 
 def format_to_json(data):
@@ -38,11 +38,6 @@ def replace_field_names(file):
 
     return file
 
-def remove_wiki_context(data):
-    for i in tqdm(range(len(data['Data'])), desc="Removing Wiki Context"):
-        del data['Data'][i]["EntityPages"]["wiki_context"]
-    return data
-
 def write_file(file):
     print("Saving file...")
     with open(f"Evaluation/datasets/original_dataset.json", "w", encoding="utf-8") as f:
@@ -61,7 +56,4 @@ if __name__ == "__main__":
     data = download_dataset(split_size)
     data = format_to_json(data)
     data = replace_field_names(data)
-    data = json.loads(data)
-    data = remove_wiki_context(data)
-    data = json.dumps(data)
     write_file = write_file(data)
