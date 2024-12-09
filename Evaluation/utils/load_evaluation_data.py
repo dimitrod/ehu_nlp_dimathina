@@ -44,7 +44,7 @@ def replace_field_names(file):
 
 def write_file(file):
     print("Saving file...")
-    with open(f"Evaluation/datasets/original_dataset.json", "w", encoding="utf-8") as f:
+    with open(f"Evaluation/datasets/validation_dataset.json", "w", encoding="utf-8") as f:
         f.write(file)
 
 
