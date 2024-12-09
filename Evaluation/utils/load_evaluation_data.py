@@ -2,9 +2,8 @@ from datasets import load_dataset
 from tqdm import tqdm
 import datasets
 import json
-import argparse
 
-def download_dataset(split_size):
+def download_dataset():
     evaluation_data = load_dataset('trivia_qa', name='rc.wikipedia.nocontext', split="validation")
     return evaluation_data
 
@@ -43,17 +42,8 @@ def write_file(file):
     with open(f"Evaluation/datasets/original_dataset.json", "w", encoding="utf-8") as f:
         f.write(file)
 
-def get_args():
-    parser = argparse.ArgumentParser(
-        description='Dataset Loader for Evaluation Dataset',)
-    parser.add_argument('--split_size', type=int, help='size of the split')
-    args = parser.parse_args()
-    return args
-
 if __name__ == "__main__":
-    args = get_args()
-    split_size = args.split_size
-    data = download_dataset(split_size)
+    data = download_dataset()
     data = format_to_json(data)
     data = replace_field_names(data)
     write_file = write_file(data)
