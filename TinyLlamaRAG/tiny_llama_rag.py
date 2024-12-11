@@ -21,6 +21,9 @@ class tiny_llama_rag:
     self.vectorizer = TfidfVectorizer()
     self.k = 5
     self.chunk_size = 400
+    self.max_new_tokens = 30
+    self.temperature = 0.2
+    self.top_k = 10
     self.text_splitter = self.create_text_splitter()
 
   def invoke(self, question):
@@ -56,7 +59,7 @@ class tiny_llama_rag:
   def get_answer(self, question, context):
     messages = self.create_messages(question, context)
     prompt = self.create_prompt(messages)
-    outputs = self.model(prompt, max_new_tokens=64, do_sample=True, temperature=0.7, top_k=50, top_p=0.95)
+    outputs = self.model(prompt, max_new_tokens=self.max_new_tokens, do_sample=False, temperature=self.temperature, top_k=self.top_k, top_p=0.95)
     output = outputs[0]["generated_text"]
     index = output.find("<|assistant|>")
     answer = output[index + len("<|assistant|>") :].strip()
