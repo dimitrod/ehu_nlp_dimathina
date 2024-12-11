@@ -47,7 +47,7 @@ class tiny_llama_rag:
   def filter_contexts(self, contexts, question):
     texts = self.text_splitter.split_text(contexts)
     self.vectorizer.fit(texts)
-    lib = self.vectorizer.transform([texts])
+    lib = self.vectorizer.transform(texts)
     query = self.vectorizer.transform([question])
     similarity_scores = cosine_similarity(query, lib).flatten()
     top_indices = np.argsort(similarity_scores)[::-1][:self.k]
