@@ -1,4 +1,3 @@
-bitsandbytes
 huggingface_hub
 sentence_transformers
 pinecone-client
