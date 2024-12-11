@@ -16,7 +16,7 @@ class mistral_instruct:
     )
     model_id = "mistralai/Mistral-7B-Instruct-v0.3"
 
-    self.retriever = SentenceTransformer('paraphrase-MiniLM-L6-v2')
+    self.retriever = SentenceTransformer('sentence-transformers/multi-qa-MiniLM-L6-cos-v1')
     self.model = AutoModelForCausalLM.from_pretrained(model_id, quantization_config=quantization_config, device_map="auto")
     self.tokenizer = AutoTokenizer.from_pretrained(model_id)
     self.pc = Pinecone(api_key=API_KEY)
@@ -27,7 +27,7 @@ class mistral_instruct:
     instruction = "You are a chatbot who always responds as shortly as possible."
     question_context = ""
 
-    index = self.pc.Index('wiki-index')
+    index = self.pc.Index('wiki-train-minilm')
     query = question
     query_encoded = self.retriever.encode([query]).tolist()
     query_return = index.query(vector=query_encoded, top_k=2, include_metadata=True)
