@@ -18,6 +18,7 @@ class mistral_instruct:
     
 
   def invoke(self, question):
+    question_context = ""
     index = self.pc.Index('wiki-train-minilm')
     query = question
     query_encoded = self.retriever.encode([query]).tolist()
@@ -28,3 +29,4 @@ class mistral_instruct:
     answer = self.model(question = question, context = question_context)
 
     return answer
+
