@@ -18,10 +18,6 @@ class mistral_instruct:
     
 
   def invoke(self, question):
-    question_add = " Answer in one or two words, no additional information, no punctiation. Use the following text to find the answer:"
-    instruction = "You are a chatbot who always responds as shortly as possible."
-    question_context = ""
-
     index = self.pc.Index('wiki-train-minilm')
     query = question
     query_encoded = self.retriever.encode([query]).tolist()
@@ -31,5 +27,4 @@ class mistral_instruct:
 
     answer = self.model(question = question, context = question_context)
 
-    return result
-
+    return answer
