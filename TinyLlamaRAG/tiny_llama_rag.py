@@ -35,6 +35,7 @@ class tiny_llama_rag:
     return self.filter_contexts(contexts, question)
 
   def retrieve_from_database(self, question):
+    print("Retrieving contexts from database...")
     question_context = ""
     index = self.pc.Index('wiki-train-minilm')
     query = question
@@ -45,6 +46,7 @@ class tiny_llama_rag:
     return question_context
 
   def filter_contexts(self, contexts, question):
+    print("Filtering contexts...")
     texts = self.text_splitter.split_text(contexts)
     self.vectorizer.fit(texts)
     lib = self.vectorizer.transform(texts)
@@ -59,13 +61,15 @@ class tiny_llama_rag:
   def get_answer(self, question, context):
     messages = self.create_messages(question, context)
     prompt = self.create_prompt(messages)
-    outputs = self.model(prompt, max_new_tokens=self.max_new_tokens, do_sample=False, temperature=self.temperature, top_k=self.top_k, top_p=0.95)
+    print("Generating answer...")
+    outputs = self.model(prompt, max_new_tokens=self.max_new_tokens, do_sample=True, temperature=self.temperature, top_k=self.top_k, top_p=0.95)
     output = outputs[0]["generated_text"]
     index = output.find("<|assistant|>")
     answer = output[index + len("<|assistant|>") :].strip()
     return answer
 
   def create_messages(self, question, context):
+    print("Creating messages...")
     question_add = " Answer in one or two words, no additional information, no punctiation. Use the following text to find the answer:"
     instruction = "You are a chatbot who always responds as shortly as possible."
 
@@ -79,6 +83,7 @@ class tiny_llama_rag:
     return messages
 
   def create_prompt(self, messages):
+    print("Creating prompt...")
     prompt = self.model.tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
     return prompt
 
