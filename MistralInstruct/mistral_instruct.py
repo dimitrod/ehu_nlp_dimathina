@@ -2,6 +2,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 from huggingface_hub import login
 from sentence_transformers import SentenceTransformer
 from pinecone import Pinecone, ServerlessSpec
+import torch
 
 class mistral_instruct:
   def __init__(self, params):
