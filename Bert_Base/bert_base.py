@@ -5,7 +5,7 @@ from pinecone import Pinecone, ServerlessSpec
 import torch
 from transformers import pipeline
 
-class mistral_instruct:
+class bert_base:
   def __init__(self, params):
     API_KEY = input('Enter Pinecone.io token: ')
     login()
@@ -28,5 +28,5 @@ class mistral_instruct:
 
     answer = self.model(question = question, context = question_context)
 
-    return answer
+    return answer["answer"]
 
