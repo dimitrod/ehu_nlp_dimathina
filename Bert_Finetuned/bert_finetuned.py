@@ -10,7 +10,7 @@ class bert_base:
     API_KEY = input('Enter Pinecone.io token: ')
     login()
 
-    model_id = 'distilbert/distilbert-base-cased-distilled-squad'
+    model_id = "mirbostani/bert-base-uncased-finetuned-triviaqa"
 
     self.retriever = SentenceTransformer('sentence-transformers/multi-qa-MiniLM-L6-cos-v1')
     self.model = pipeline("question-answering", model = model_id)
