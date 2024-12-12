@@ -2,13 +2,18 @@ import joblib
 from transformers import pipeline
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+import os
 
 class rag_sparse_embeddings:
     def __init__(self, params):
+        env = os.environ.copy()
+        env["PYTHONPATH"] = "database"
+        self.database_path = os.path.join(os.getcwd(), "RAG_Sparse_Embeddings/database")
+
         print("loading vecorizer")
         self.vectorizer = self.initialize_vectorizer()
         print("loading vector base")
-        self.vector_base = joblib.load('database/document_library.pkl')
+        self.vector_base = joblib.load(self.database_path + '/document_library.pkl')
         print("loading documents")
         self.documents = self.load_documents()
         print("loading model")
@@ -37,11 +42,11 @@ class rag_sparse_embeddings:
 
     def initialize_vectorizer(self):
         vectorizer = TfidfVectorizer()
-        vocabulary = joblib.load('database/tfidf_vocabulary.pkl')
+        vocabulary = joblib.load(self.database_path + '/tfidf_vocabulary.pkl')
         vectorizer.fit(vocabulary)
         return vectorizer
 
     def load_documents(self):
-        with open('database/documents.txt', 'r', encoding='utf-8') as f:
+        with open(self.database_path + '/documents.txt', 'r', encoding='utf-8') as f:
             documents = f.readlines()
         return documents
