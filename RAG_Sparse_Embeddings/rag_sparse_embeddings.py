@@ -19,12 +19,10 @@ class rag_sparse_embeddings:
         self.documents = self.load_documents()
         print("loading model")
         self.model = pipeline('question-answering')
-        self.top_n = params[0]
+        self.top_n = int(params[0])
 
     def invoke(self, question):
-        print("retrieving contexts")
         contexts = self.get_contexts(question)
-        print("retrieving answer")
         answer = self.get_answer(question, contexts)
         return answer
 
