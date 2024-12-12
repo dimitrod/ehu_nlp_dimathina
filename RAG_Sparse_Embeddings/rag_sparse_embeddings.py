@@ -2,6 +2,7 @@ import joblib
 from transformers import pipeline
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+import numpy as np
 import os
 
 class rag_sparse_embeddings:
@@ -30,7 +31,7 @@ class rag_sparse_embeddings:
     def get_contexts(self, question):
         query = self.vectorizer.transform([question])
         similarity_scores = cosine_similarity(query, self.vector_base).flatten()
-        top_indices = similarity_scores.argsort()[::-1][:self.top_n]
+        top_indices = np.argsort(similarity_scores)[::-1][:self.top_n]
         contexts = ""
         for index in top_indices:
             contexts += self.documents[index]
