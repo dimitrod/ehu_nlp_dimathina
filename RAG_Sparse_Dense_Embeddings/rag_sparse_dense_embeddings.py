@@ -8,13 +8,14 @@ from sklearn.metrics.pairwise import cosine_similarity
 import os
 import numpy as np
 from datetime import datetime
+from pathlib import Path
 
 class rag_sparse_dense_embeddings:
     def __init__(self, params):
         #setup path variable
         env = os.environ.copy()
         env["PYTHONPATH"] = "database"
-        self.database_path = os.path.join(os.getcwd(), "RAG_Sparse_Dense_Embeddings/database")
+        self.database_path = Path(os.getcwd())/"database"
 
         #load parameters
         self.k = int(params[0])
@@ -23,7 +24,7 @@ class rag_sparse_dense_embeddings:
         #initialize vector base
         print(datetime.now(), ": loading vector base")
         self.vectorizer = self.initialize_vectorizer()
-        self.vector_base = joblib.load(self.database_path + "/document_library.pkl")
+        self.vector_base = joblib.load(self.database_path/"document_library.pkl")
         self.documents = self.load_documents()
 
         #initialize text splitter and embedding model
@@ -59,25 +60,24 @@ class rag_sparse_dense_embeddings:
     def filter_context(self, contexts, question):
         paragraphs = self.text_splitter.split_text(contexts)
         lib = FAISS.from_texts(paragraphs, self.embedding_model)
-        query = self.embedding_model.transform([question])
-        top_paragraphs = lib.similarity_search(query, self.k)
+        top_paragraphs = lib.similarity_search(question, self.k)
         context = ""
         for paragraph in top_paragraphs:
-            context += paragraph
+            context += paragraph.page_content
         return context
 
     def get_answer(self, question, contexts):
         print(datetime.now(), ": generating answer")
-        return self.reader_model(question, contexts)
+        return self.reader_model(question=question, context=contexts)
 
     def initialize_vectorizer(self):
         vectorizer = TfidfVectorizer()
-        vocabulary = joblib.load(self.database_path + "/vocabulary.pkl")
+        vocabulary = joblib.load(self.database_path/"tfidf_vocabulary.pkl")
         vectorizer.fit(vocabulary)
         return vectorizer
 
     def load_documents(self):
-        with open(self.database_path + "/documents.txt", "r", encoding='utf-8') as f:
+        with open(self.database_path/"documents.txt", "r", encoding='utf-8') as f:
             documents = f.readlines()
 
         return documents
