@@ -1,4 +1,0 @@
-transformers
-joblib
-scikit-learn
-langchain_community
