@@ -2,3 +2,5 @@ transformers
 joblib
 scikit-learn
 langchain_community
+faiss-cpu
+faiss-gpu

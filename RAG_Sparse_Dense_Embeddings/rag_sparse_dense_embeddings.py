@@ -9,6 +9,7 @@ import os
 import numpy as np
 from datetime import datetime
 from pathlib import Path
+from huggingface_hub import login
 
 class rag_sparse_dense_embeddings:
     def __init__(self, params):
@@ -22,7 +23,8 @@ class rag_sparse_dense_embeddings:
         self.chunk_size = int(params[1])
         self.overlap = int(params[2])
 
-        self.model_id = params[3]
+        self.temperature = float(params[3])
+        self.max_tokens = int(params[4])
 
         #initialize vector base
         print(datetime.now(), ": loading vector base")
@@ -38,7 +40,9 @@ class rag_sparse_dense_embeddings:
 
         #load reader model
         print(datetime.now(), ": loading reader model")
-        self.reader_model = pipeline('question-answering', model_id=self.model_id)
+        login(token="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")
+        print(datetime.now(), ": log in complete")
+        self.reader_model = pipeline("text-generation", model="mistralai/Mistral-7B-Instruct-v0.3")
 
     def invoke(self, question):
         contexts = self.get_contexts(question)
@@ -46,15 +50,14 @@ class rag_sparse_dense_embeddings:
         return answer['answer']
 
     def get_contexts(self, question):
-        print(datetime.now(), ": retrieving contexts")
+        print(datetime.now(), ": Retrieving documents")
         contexts = self.retrieve_contexts(question)
-        print(datetime.now(), ": filtering contexts")
+        print(datetime.now(), ": Filtering contexts")
         paragraphs = self.filter_context(contexts, question)
         return paragraphs
 
     def retrieve_contexts(self, question):
         query = self.vectorizer.transform([question])
-        print(query.size)
         similarity_scores = cosine_similarity(query, self.vector_base).flatten()
         top_indices = np.argsort(similarity_scores)[-self.k:][::-1][:2]
         contexts = ""
@@ -72,7 +75,23 @@ class rag_sparse_dense_embeddings:
         return context
 
     def get_answer(self, question, contexts):
-        return self.reader_model(question=question, context=contexts)
+        print(datetime.now(), ": Creating message")
+        messages = self.create_messages(question, contexts)
+        print(datetime.now(), ": ", messages)
+        print(datetime.now(), ": Generating response")
+        return self.reader_model(messages, max_tokens=self.max_tokens, tempature=self.temperature)
+
+    def create_messages(self, question, contexts):
+        instruction = "You are a chatbot who always responds as shortly as possible."
+        question_add = "Answer in one or two words, no additional information, no punctiation. Use the following text to find the answer:"
+        messages = [
+            {
+                "role": "system",
+                "content": instruction,
+            },
+            {"role": "user", "content": question + "\n" +question_add + "\n" + contexts},
+        ]
+        return messages
 
     def initialize_vectorizer(self):
         vocabulary = joblib.load(self.database_path/"tfidf_vocabulary.pkl")
