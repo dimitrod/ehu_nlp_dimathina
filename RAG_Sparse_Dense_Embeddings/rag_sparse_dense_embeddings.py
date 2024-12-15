@@ -15,15 +15,19 @@ class rag_sparse_dense_embeddings:
         #setup path variable
         env = os.environ.copy()
         env["PYTHONPATH"] = "database"
-        self.database_path = Path(os.getcwd())/"database"
+        self.database_path = Path(os.getcwd())/"RAG_Sparse_Dense_Embeddings"/"database"
 
         #load parameters
         self.k = int(params[0])
-        self.model_id = params[1]
+        self.chunk_size = int(params[1])
+        self.overlap = int(params[2])
+
+        self.model_id = params[3]
 
         #initialize vector base
         print(datetime.now(), ": loading vector base")
-        self.vector_base = joblib.load(self.database_path/"database.pkl")
+        self.vector_base = joblib.load(self.database_path/"document_library.pkl")
+
         self.vectorizer = self.initialize_vectorizer()
         self.documents = self.load_documents()
 
@@ -50,6 +54,7 @@ class rag_sparse_dense_embeddings:
 
     def retrieve_contexts(self, question):
         query = self.vectorizer.transform([question])
+        print(query.size)
         similarity_scores = cosine_similarity(query, self.vector_base).flatten()
         top_indices = np.argsort(similarity_scores)[-self.k:][::-1][:2]
         contexts = ""
@@ -67,25 +72,31 @@ class rag_sparse_dense_embeddings:
         return context
 
     def get_answer(self, question, contexts):
-        print(datetime.now(), ": generating answer")
         return self.reader_model(question=question, context=contexts)
 
     def initialize_vectorizer(self):
-        vectorizer = TfidfVectorizer()
         vocabulary = joblib.load(self.database_path/"tfidf_vocabulary.pkl")
-        vectorizer.fit(vocabulary)
+        vectorizer = TfidfVectorizer(
+            stop_words='english',
+            max_df=0.8,
+            min_df=2,
+            max_features=10000,
+            ngram_range=(1, 4),
+            vocabulary=vocabulary,
+        )
+        dummy_data = [""]
+        vectorizer.fit(dummy_data)
         return vectorizer
 
     def load_documents(self):
         with open(self.database_path/"documents.txt", "r", encoding='utf-8') as f:
             documents = f.readlines()
-
         return documents
 
     def create_text_splitter(self):
         text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size=500,  # Maximum size of each chunk
-            chunk_overlap=10,  # Overlap between consecutive chunks
+            chunk_size=self.chunk_size,  # Maximum size of each chunk
+            chunk_overlap=self.overlap,  # Overlap between consecutive chunks
             separators=["\n\n", "\n", " ", ""],  # Hierarchy of delimiters
         )
         return text_splitter
