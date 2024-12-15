@@ -1,0 +1,2 @@
+*.pkl filter=lfs diff=lfs merge=lfs -text
+/RAG_Sparse_Dense_Embeddings/database/documents.txt filter=lfs diff=lfs merge=lfs -text
