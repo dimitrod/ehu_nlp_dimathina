@@ -13,6 +13,8 @@ from huggingface_hub import login
 
 class rag_sparse_dense_embeddings:
     def __init__(self, params):
+        login()
+        print(datetime.now(), ": log in complete")
         #setup path variable
         env = os.environ.copy()
         env["PYTHONPATH"] = "database"
@@ -40,8 +42,6 @@ class rag_sparse_dense_embeddings:
 
         #load reader model
         print(datetime.now(), ": loading reader model")
-        login()
-        print(datetime.now(), ": log in complete")
         self.reader_model = pipeline("text-generation", model="mistralai/Mistral-7B-Instruct-v0.3")
 
     def invoke(self, question):
