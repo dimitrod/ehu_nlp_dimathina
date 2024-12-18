@@ -18,4 +18,4 @@ class chat_gpt:
       {"role": "user", "content": question},
     ]
     answer = self.model.chat.completions.create(model="gpt-4o", messages=messages)
-    return answer.choices[0].message["content"]
+    return answer.choices[0].message.content
