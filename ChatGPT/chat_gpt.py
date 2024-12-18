@@ -1,11 +1,9 @@
-from openai import OpenAI
-import os
+import openai
 
 class chat_gpt:
   def __init__(self, params):
-    OPEN_API_KEY = input("Enter your OpenAI API Token: ")
-    os.environ["OPENAI_API_KEY"] = OPEN_API_KEY
-    self.model = OpenAI()
+    openai.api_key = input("Enter your OpenAI API Token: ")
+    self.model = openai
 
   def invoke(self, question):
     answer = self.get_answer(question)
