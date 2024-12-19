@@ -97,6 +97,6 @@ if __name__ == "__main__":
     results = evaluate_triviaqa(directory + "/evaluation_dataset.json", directory + "/predictions.json")
     print("Evaluation complete")
     print("Saving results...")
-    with open(f"Evaluation/results/{model_name}_split_size={split_size}_results.txt", "w", encoding="utf-8") as f:
+    with open(f"evaluation/results/{model_name}_split_size={split_size}_results.txt", "w", encoding="utf-8") as f:
       f.write(results)
     print(f"Test results saved under Evaluation/results/{model_name}_split_size={split_size}_results.txt")
