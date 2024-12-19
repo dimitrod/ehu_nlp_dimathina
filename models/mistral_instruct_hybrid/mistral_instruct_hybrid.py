@@ -44,7 +44,7 @@ class mistral_instruct_hybrid:
     def invoke(self, question):
         contexts = self.get_contexts(question)
         answer = self.get_answer(question, contexts)
-        return answer['answer']
+        return answer[0]["generated_text"][2]["content"]
 
     def get_contexts(self, question):
         print(datetime.now(), ": Retrieving documents")
