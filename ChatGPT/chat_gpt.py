@@ -4,6 +4,7 @@ class chat_gpt:
   def __init__(self, params):
     openai.api_key = input("Enter your OpenAI API Token: ")
     self.model = openai
+    self.temperature = float(params["temperature"])
 
   def invoke(self, question):
     answer = self.get_answer(question)
@@ -17,5 +18,5 @@ class chat_gpt:
       },
       {"role": "user", "content": question},
     ]
-    answer = self.model.chat.completions.create(model="gpt-4o", messages=messages)
+    answer = self.model.chat.completions.create(model="gpt-4o", messages=messages, temperature=self.temperature)
     return answer.choices[0].message.content
