@@ -26,19 +26,19 @@ class mistral_instruct_hybrid:
         self.overlap = int(params[2])
 
         #initialize vector base
-        print(datetime.now(), ": loading vector base")
+        #print(datetime.now(), ": loading vector base")
         self.vector_base = joblib.load(self.database_path/"document_library.pkl")
 
         self.vectorizer = self.initialize_vectorizer()
         self.documents = self.load_documents()
 
         #initialize text splitter and embedding model
-        print(datetime.now(), ": loading embedding model")
+        #print(datetime.now(), ": loading embedding model")
         self.text_splitter = self.create_text_splitter()
         self.embedding_model = HuggingFaceEmbeddings(model_name="BAAI/bge-base-en-v1.5")
 
         #load reader model
-        print(datetime.now(), ": loading reader model")
+        #print(datetime.now(), ": loading reader model")
         self.reader_model = pipeline("text-generation", model="mistralai/Mistral-7B-Instruct-v0.3")
 
     def invoke(self, question):
@@ -47,9 +47,9 @@ class mistral_instruct_hybrid:
         return answer[0]["generated_text"][2]["content"]
 
     def get_contexts(self, question):
-        print(datetime.now(), ": Retrieving documents")
+        #print(datetime.now(), ": Retrieving documents")
         contexts = self.retrieve_contexts(question)
-        print(datetime.now(), ": Filtering contexts")
+        #print(datetime.now(), ": Filtering contexts")
         paragraphs = self.filter_context(contexts, question)
         return paragraphs
 
@@ -72,10 +72,10 @@ class mistral_instruct_hybrid:
         return context
 
     def get_answer(self, question, contexts):
-        print(datetime.now(), ": Creating message")
+        #print(datetime.now(), ": Creating message")
         messages = self.create_messages(question, contexts)
-        print(datetime.now(), ": ", messages)
-        print(datetime.now(), ": Generating response")
+        #print(datetime.now(), ": ", messages)
+        #print(datetime.now(), ": Generating response")
         return self.reader_model(messages)
 
     def create_messages(self, question, contexts):
