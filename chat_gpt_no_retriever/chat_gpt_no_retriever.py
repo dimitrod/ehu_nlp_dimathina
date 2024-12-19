@@ -1,6 +1,6 @@
 import openai
 
-class chat_gpt:
+class chat_gpt_no_retriever:
   def __init__(self, params):
     openai.api_key = input("Enter your OpenAI API Token: ")
     self.model = openai
