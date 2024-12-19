@@ -4,7 +4,7 @@ class chat_gpt:
   def __init__(self, params):
     openai.api_key = input("Enter your OpenAI API Token: ")
     self.model = openai
-    self.temperature = float(params["temperature"])
+    self.temperature = float(params[0])
 
   def invoke(self, question):
     answer = self.get_answer(question)
