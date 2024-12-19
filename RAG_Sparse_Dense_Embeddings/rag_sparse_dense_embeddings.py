@@ -25,9 +25,6 @@ class rag_sparse_dense_embeddings:
         self.chunk_size = int(params[1])
         self.overlap = int(params[2])
 
-        self.temperature = float(params[3])
-        self.max_tokens = int(params[4])
-
         #initialize vector base
         print(datetime.now(), ": loading vector base")
         self.vector_base = joblib.load(self.database_path/"document_library.pkl")
@@ -79,7 +76,7 @@ class rag_sparse_dense_embeddings:
         messages = self.create_messages(question, contexts)
         print(datetime.now(), ": ", messages)
         print(datetime.now(), ": Generating response")
-        return self.reader_model(messages, max_tokens=self.max_tokens, tempature=self.temperature)
+        return self.reader_model(messages)
 
     def create_messages(self, question, contexts):
         instruction = "You are a chatbot who always responds as shortly as possible."
