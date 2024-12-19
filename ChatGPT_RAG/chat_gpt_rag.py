@@ -24,19 +24,19 @@ class chat_gpt_rag:
         self.temperature = float(params[3])
 
         #initialize vector base
-        print(datetime.now(), ": loading vector base")
+        #print(datetime.now(), ": loading vector base")
         self.vector_base = joblib.load(self.database_path/"document_library.pkl")
 
         self.vectorizer = self.initialize_vectorizer()
         self.documents = self.load_documents()
 
         #initialize text splitter and embedding model
-        print(datetime.now(), ": loading embedding model")
+        #print(datetime.now(), ": loading embedding model")
         self.text_splitter = self.create_text_splitter()
         self.embedding_model = HuggingFaceEmbeddings(model_name="BAAI/bge-base-en-v1.5")
 
         #load reader model
-        print(datetime.now(), ": loading reader model")
+        #print(datetime.now(), ": loading reader model")
         openai.api_key = input("Enter your OpenAI API Token: ")
         self.model = openai
 
@@ -46,9 +46,9 @@ class chat_gpt_rag:
         return answer
 
     def get_contexts(self, question):
-        print(datetime.now(), ": Retrieving documents")
+        #print(datetime.now(), ": Retrieving documents")
         contexts = self.retrieve_contexts(question)
-        print(datetime.now(), ": Filtering contexts")
+        #print(datetime.now(), ": Filtering contexts")
         paragraphs = self.filter_context(contexts, question)
         return paragraphs
 
@@ -63,7 +63,7 @@ class chat_gpt_rag:
 
     def filter_context(self, contexts, question):
         paragraphs = self.text_splitter.split_text(contexts)
-        print("Number of paragraphs: ", len(paragraphs))
+        #print("Number of paragraphs: ", len(paragraphs))
         lib = FAISS.from_texts(paragraphs, self.embedding_model)
         top_paragraphs = lib.similarity_search(question, self.k)
         context = ""
@@ -72,10 +72,10 @@ class chat_gpt_rag:
         return context
 
     def get_answer(self, question, contexts):
-        print(datetime.now(), ": Creating message")
+        #print(datetime.now(), ": Creating message")
         messages = self.create_messages(question, contexts)
-        print("Messages: ", messages)
-        print(datetime.now(), ": Generating response")
+        #print("Messages: ", messages)
+        #print(datetime.now(), ": Generating response")
         answer = self.model.chat.completions.create(model="gpt-4o", messages=messages, temperature=self.temperature)
         return answer.choices[0].message.content
 
