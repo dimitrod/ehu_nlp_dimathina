@@ -65,37 +65,33 @@ def write_data(path, data):
 
 def get_args():
     parser = argparse.ArgumentParser(
-        description='Evaluation Chain for TriviaQA {}')
-    parser.add_argument('--model_directory', help='Directory of the model')
-    parser.add_argument('--model_module', help='Module of the model')
-    parser.add_argument('--model_class', help='Class of the model')
-    parser.add_argument('--split_size', help='Size of the split')
+        description='Evaluation Chain for TriviaQA')
+    parser.add_argument('--model_name', help='Name of the model')
     parser.add_argument('--model_params', nargs='+', help='Parameters of the model')
+    parser.add_argument('--split_size', help='Size of the split')
     args = parser.parse_args()
     return args
 
 if __name__ == "__main__":
     args = get_args()
 
-    directory = "Evaluation/datasets"
+    directory = "evaluation/datasets"
 
     if args.split_size is not None:
         split_size = int(args.split_size)
     else:
         split_size = 7993
-    model_directory = args.model_directory
-    model_module = args.model_module
-    model_class = args.model_class
+
+    model_name = args.model_name
     model_params = args.model_params
 
-    model_path = f"{model_directory}.{model_module}"
-    model_name = f"{model_class}"
+    model_path = f"{model_name}.{model_name}"
 
     questions = load_questions(directory, split_size)
     model = load_model(model_path, model_name, model_params)
     print("Model initiated")
     print("Starting QA...")
-    answers = get_answers(directory, questions, model)
+    get_answers(directory, questions, model)
     print("QA complete")
     print("Starting evaluation...")
     results = evaluate_triviaqa(directory + "/evaluation_dataset.json", directory + "/predictions.json")
