@@ -1,5 +1,3 @@
-bitsandbytes
-huggingface_hub
-git+https://github.com/huggingface/transformers.git
-git+https://github.com/huggingface/peft.git
-git+https://github.com/huggingface/accelerate.git
+version https://git-lfs.github.com/spec/v1
+oid sha256:bf28c138cc392a39a0a3b627fc06bf1dadf07e845407f3de47c909dfac0016d3
+size 178

@@ -1,6 +1,3 @@
-langchain
-langchain_community
-langchain_core
-faiss-cpu
-datasets
-transformers
+version https://git-lfs.github.com/spec/v1
+oid sha256:03ea37025225917548020eee981e6346ebec7cc79c3590c020d0f1e241b26340
+size 81

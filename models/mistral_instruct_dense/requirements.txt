@@ -1,7 +1,3 @@
-bitsandbytes
-huggingface_hub
-sentence_transformers
-pinecone-client
-git+https://github.com/huggingface/transformers.git
-git+https://github.com/huggingface/peft.git
-git+https://github.com/huggingface/accelerate.git
+version https://git-lfs.github.com/spec/v1
+oid sha256:f391883843633cd399ada71061581ef840d6b5a896659da62a7b08157b804004
+size 218
