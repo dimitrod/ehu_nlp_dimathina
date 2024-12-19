@@ -10,7 +10,7 @@ from datetime import datetime
 from pathlib import Path
 import openai
 
-class chat_gpt_rag:
+class chat_gpt_hybrid:
     def __init__(self, params):
         #setup path variable
         env = os.environ.copy()
