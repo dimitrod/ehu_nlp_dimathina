@@ -1,7 +1,0 @@
-huggingface_hub
-sentence_transformers
-pinecone-client
-pinecone
-git+https://github.com/huggingface/transformers.git
-git+https://github.com/huggingface/peft.git
-git+https://github.com/huggingface/accelerate.git
