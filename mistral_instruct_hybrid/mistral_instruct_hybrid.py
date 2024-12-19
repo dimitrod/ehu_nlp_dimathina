@@ -11,7 +11,7 @@ from datetime import datetime
 from pathlib import Path
 from huggingface_hub import login
 
-class rag_sparse_dense_embeddings:
+class mistral_instruct_hybrid:
     def __init__(self, params):
         login()
         print(datetime.now(), ": log in complete")
