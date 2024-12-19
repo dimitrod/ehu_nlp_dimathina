@@ -9,7 +9,7 @@ class bert_base_sparse:
     def __init__(self, params):
         env = os.environ.copy()
         env["PYTHONPATH"] = "database"
-        self.database_path = os.path.join(os.getcwd(), "RAG_Sparse_Embeddings/database")
+        self.database_path = os.path.join(os.getcwd(), "bert_base_sparse/database")
 
         print("loading vecorizer")
         self.vectorizer = self.initialize_vectorizer()

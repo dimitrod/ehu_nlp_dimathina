@@ -15,7 +15,7 @@ class chat_gpt_hybrid:
         #setup path variable
         env = os.environ.copy()
         env["PYTHONPATH"] = "database"
-        self.database_path = Path(os.getcwd())/"ChatGPT_RAG"/"database"
+        self.database_path = Path(os.getcwd())/"chat_gpt_hybrid"/"database"
 
         #load parameters
         self.k = int(params[0])

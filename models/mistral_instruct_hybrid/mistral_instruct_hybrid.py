@@ -18,7 +18,7 @@ class mistral_instruct_hybrid:
         #setup path variable
         env = os.environ.copy()
         env["PYTHONPATH"] = "database"
-        self.database_path = Path(os.getcwd())/"RAG_Sparse_Dense_Embeddings"/"database"
+        self.database_path = Path(os.getcwd())/"mistral_instruct_hybrid"/"database"
 
         #load parameters
         self.k = int(params[0])
