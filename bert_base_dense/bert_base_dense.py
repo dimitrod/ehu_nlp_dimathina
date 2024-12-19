@@ -5,7 +5,7 @@ from pinecone import Pinecone, ServerlessSpec
 import torch
 from transformers import pipeline
 
-class bert_base_dense_retriever:
+class bert_base_dense:
   def __init__(self, params):
     API_KEY = input('Enter Pinecone.io token: ')
     login()

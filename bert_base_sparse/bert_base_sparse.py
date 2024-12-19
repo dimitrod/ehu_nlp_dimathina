@@ -5,7 +5,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 import os
 
-class rag_sparse_embeddings:
+class bert_base_sparse:
     def __init__(self, params):
         env = os.environ.copy()
         env["PYTHONPATH"] = "database"

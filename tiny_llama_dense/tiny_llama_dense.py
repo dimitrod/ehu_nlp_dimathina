@@ -8,7 +8,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from transformers import pipeline
 import torch
 
-class tiny_llama_dense_retriever:
+class tiny_llama_dense:
   def __init__(self, params):
     API_KEY = input('Enter Pinecone.io token: ')
     login()

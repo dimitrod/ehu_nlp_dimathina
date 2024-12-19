@@ -4,7 +4,7 @@ from sentence_transformers import SentenceTransformer
 from pinecone import Pinecone, ServerlessSpec
 import torch
 
-class mistral_instruct_dense_retriever:
+class mistral_instruct_dense:
   def __init__(self, params):
     API_KEY = input('Enter Pinecone.io token: ')
     login()
