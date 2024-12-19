@@ -7,7 +7,7 @@ import faiss
 import os
 
 
-class pipeline_default_model_qa_embeddings:
+class bert_base_qa_embeddings:
     def __init__(self, params):
         env = os.environ.copy()
         env["PYTHONPATH"] = "rag_qa_database"
