@@ -21,7 +21,10 @@ class chat_gpt_hybrid:
         self.k = int(params[0])
         self.chunk_size = int(params[1])
         self.overlap = int(params[2])
+<<<<<<< HEAD:chat_gpt_hybrid/chat_gpt_hybrid.py
         self.temperature = float(params[3])
+=======
+>>>>>>> rag_sparse_dense_embeddings:RAG_Sparse_Dense_Embeddings/rag_sparse_dense_embeddings.py
 
         #initialize vector base
         #print(datetime.now(), ": loading vector base")
@@ -74,10 +77,16 @@ class chat_gpt_hybrid:
     def get_answer(self, question, contexts):
         #print(datetime.now(), ": Creating message")
         messages = self.create_messages(question, contexts)
+<<<<<<< HEAD:chat_gpt_hybrid/chat_gpt_hybrid.py
         #print("Messages: ", messages)
         #print(datetime.now(), ": Generating response")
         answer = self.model.chat.completions.create(model="gpt-4o", messages=messages, temperature=self.temperature)
         return answer.choices[0].message.content
+=======
+        print(datetime.now(), ": ", messages)
+        print(datetime.now(), ": Generating response")
+        return self.reader_model(messages)
+>>>>>>> rag_sparse_dense_embeddings:RAG_Sparse_Dense_Embeddings/rag_sparse_dense_embeddings.py
 
     def create_messages(self, question, contexts):
         instruction = "You are a chatbot who always responds as shortly as possible."
