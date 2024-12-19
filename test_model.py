@@ -1,9 +1,9 @@
-from RAG_Sparse_Dense_Embeddings.rag_sparse_dense_embeddings import rag_sparse_dense_embeddings
+from ChatGPT_RAG.chat_gpt_rag import chat_gpt_rag
 from datetime import datetime
 
-params = [10, 300 , 0, 0.5, 30]
+params = [10, 300 , 0, 0.3]
 
-model = rag_sparse_dense_embeddings(params)
+model = chat_gpt_rag(params)
 
 question = "Where does France lie?"
 print("<",datetime.now(), "> Question: ", question)

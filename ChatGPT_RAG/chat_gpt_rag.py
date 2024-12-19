@@ -2,31 +2,26 @@ import joblib
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from transformers import pipeline
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import os
 import numpy as np
 from datetime import datetime
 from pathlib import Path
-from huggingface_hub import login
+import openai
 
-class rag_sparse_dense_embeddings:
+class chat_gpt_rag:
     def __init__(self, params):
-        login()
-        print(datetime.now(), ": log in complete")
         #setup path variable
         env = os.environ.copy()
         env["PYTHONPATH"] = "database"
-        self.database_path = Path(os.getcwd())/"RAG_Sparse_Dense_Embeddings"/"database"
+        self.database_path = Path(os.getcwd())/"ChatGPT_RAG"/"database"
 
         #load parameters
         self.k = int(params[0])
         self.chunk_size = int(params[1])
         self.overlap = int(params[2])
-
         self.temperature = float(params[3])
-        self.max_tokens = int(params[4])
 
         #initialize vector base
         print(datetime.now(), ": loading vector base")
@@ -42,12 +37,13 @@ class rag_sparse_dense_embeddings:
 
         #load reader model
         print(datetime.now(), ": loading reader model")
-        self.reader_model = pipeline("text-generation", model="mistralai/Mistral-7B-Instruct-v0.3")
+        openai.api_key = input("Enter your OpenAI API Token: ")
+        self.model = openai
 
     def invoke(self, question):
         contexts = self.get_contexts(question)
         answer = self.get_answer(question, contexts)
-        return answer['answer']
+        return answer
 
     def get_contexts(self, question):
         print(datetime.now(), ": Retrieving documents")
@@ -67,6 +63,7 @@ class rag_sparse_dense_embeddings:
 
     def filter_context(self, contexts, question):
         paragraphs = self.text_splitter.split_text(contexts)
+        print("Number of paragraphs: ", len(paragraphs))
         lib = FAISS.from_texts(paragraphs, self.embedding_model)
         top_paragraphs = lib.similarity_search(question, self.k)
         context = ""
@@ -77,9 +74,10 @@ class rag_sparse_dense_embeddings:
     def get_answer(self, question, contexts):
         print(datetime.now(), ": Creating message")
         messages = self.create_messages(question, contexts)
-        print(datetime.now(), ": ", messages)
+        print("Messages: ", messages)
         print(datetime.now(), ": Generating response")
-        return self.reader_model(messages, max_tokens=self.max_tokens, tempature=self.temperature)
+        answer = self.model.chat.completions.create(model="gpt-4o", messages=messages, temperature=self.temperature)
+        return answer.choices[0].message.content
 
     def create_messages(self, question, contexts):
         instruction = "You are a chatbot who always responds as shortly as possible."
