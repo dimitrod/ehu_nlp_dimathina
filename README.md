@@ -1,5 +1,5 @@
 # TriviaQA: Open-Domain Question Answering
-A very short readme for our GitHub repository. The Pinecone.io token for the dense database can be provided upon request. The amount of commits is inflated, because we have merged multiple branches that had the same pre-commits and spent some time renaming and organising all files. We opted in to keep the inflated amount in order to keep the complete commit history for each file.
+A very short readme for our GitHub repository. The Pinecone.io token for the dense database can be provided upon request. The amount of commits is inflated, because we have merged multiple branches that had the same pre-commits and spent some time renaming and organising all files. We opted to keep the inflated amount in order to keep the complete commit history for each file.
 
 ## Usage
 The notebooks are well documented inside:
