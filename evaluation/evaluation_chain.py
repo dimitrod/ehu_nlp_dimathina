@@ -99,4 +99,4 @@ if __name__ == "__main__":
     print("Saving results...")
     with open(f"evaluation/results/{model_name}_split_size={split_size}_results.txt", "w", encoding="utf-8") as f:
       f.write(results)
-    print(f"Test results saved under Evaluation/results/{model_name}_split_size={split_size}_results.txt")
+    print(f"Test results saved under evaluation/results/{model_name}_split_size={split_size}_results.txt")
